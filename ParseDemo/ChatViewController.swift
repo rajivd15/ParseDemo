@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import Parse
 
 class ChatViewController: UIViewController {
 
+    @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet weak var composeButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,5 +34,22 @@ class ChatViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    @IBAction func composeMessageAction(sender: AnyObject) {
+        
+        var message = PFObject(className:"Message_iOSFeb2016")
+        
+        message["text"] = self.messageTextField.text
+        
+        message.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                // The object has been saved.
+                NSLog("Message Successfully Saved")
+            } else {
+                // There was a problem, check error.description
+            }
+        }
+
+    }
 
 }
